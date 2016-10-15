@@ -24,4 +24,12 @@ private String name;
             return true;
 
     }
+
+    public Item takeFromInventory(Item item){
+        Item item2 = items.get(items.indexOf(item));
+        items.remove(item);
+        return item2;
+    }
+
+
 }
