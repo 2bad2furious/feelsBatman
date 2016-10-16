@@ -19,20 +19,25 @@ public class GameUI {
     }
 
     public void play(Location location) {
+        Item armor = players.get(0).getArmor();
+        if(armor != null)
+        Response.print(armor.getTitle());
         if (location == null) {
             throw new IllegalArgumentException("Location cannot be null");
         }
         presentLocation(location);
         if (location.getOptions() != null && location.getOptions().size() > 0) {
             Option selectedOption = askForMove(location);
-            if(selectedOption.getLocation() != null)
-            play(selectedOption.getLocation());
-            else if(selectedOption.getItem() != null) {
-              Player p1 = players.get(0);
-                if(p1.addToInventory(selectedOption.getItem()))
-                    location.removeOption(selectedOption);
-                play(location);
-            }else
+            if (selectedOption.getLocation() != null)
+                play(selectedOption.getLocation());
+            else if (selectedOption.getItem() != null) {
+                Player p1 = players.get(0);
+                Item item = p1.addToInventory(selectedOption.getItem());
+                location.removeOption(selectedOption);
+                if(item != null)
+                    location.addOption(item.getTitle(),item);
+                    play(location);
+                   }else
                 play(null);
         } else {
             System.out.println("The End");
