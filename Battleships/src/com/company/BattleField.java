@@ -1,118 +1,189 @@
 package com.company;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 /**
  * Created by user on 27.10.2016.
  */
 public class BattleField {
-    private int[][] field;
-    private int sizeX;
-    private int sizeY;
-    private int limit;
-    private int shipCounter;
+    private Shippart[][] field = new Shippart[10][10];
+    private ArrayList<Ship> ships = new ArrayList<Ship>();
 
-    public BattleField(int[][] arr, int sizeX, int sizeY, int limit) {
-        int counter = 0;
-        int counter2 = 0;
-        if (arr != null) {
-            for (int i = 0; i < arr[0].length; i++) {
-                for (int j = 0; j < arr.length; j++) {
-                    counter2++;
-                    if (arr[i][j] == 1) {
-                        counter++;
-                    }
+    public BattleField(ArrayList<Ship> availableShips,boolean bot) {
+        int index;
+        Ship curShip = null;
+        Boolean valid;
+        if (bot) {
+            while (true) {
+                if (availableShips.size() == 0)
+                    break;
+
+                curShip = availableShips.get(0);
+                curShip.setRotated(Game.rn.nextInt(2) % 2);
+
+                Coordinates c = new Coordinates(Game.rn.nextInt(10)%10,Game.rn.nextInt(10)%10);
+                valid = checkValidShipPlacement(curShip, c);
+
+                if(valid) {
+                    curShip.setCoordinates(c);
+                    placeShipOnField(c, curShip);
+                    availableShips.remove(curShip);
+                    ships.add(curShip);
+                    curShip = null;
                 }
             }
-        } else {
-            arr = new int[sizeX][sizeY];
-            this.limit = limit;
-            counter = 0;
-            while (true) {
-                this.field = arr;
-                printField();
-                UserInteraction.com("Insert first index");
-                int a = Integer.parseInt(UserInteraction.askForWord());
-                UserInteraction.com("Insert second index");
-                int b = Integer.parseInt(UserInteraction.askForWord());
-                if(a>=arr.length||b>= arr[0].length){
-                    UserInteraction.com("Wrong index:( insert only numbers smaller than "+(sizeX));
-                    continue;
-                }
-                if (arr[a][b] != 1) {
-                    arr[a][b] = 1;
-                    counter++;
-                    UserInteraction.com("Successfully added");
-                    UserInteraction.com("Number of ships on your field:" + counter);
-                    UserInteraction.com("Number of ships needed on your field:" + limit);
-                } else {
-                    UserInteraction.com("Already used index!");
-                    continue;
-                }
-                if (counter == this.limit) {
-                    break;
+            } else{
+                while (true) {
+                    if (availableShips.size() == 0) break;
+
+                    if (curShip == null) {
+                        index = UserInteraction.listAvailableShipTypes(availableShips);
+                        curShip = availableShips.get(index);
+                    }
+
+                    if (curShip.getSize() > 1)
+                        index = UserInteraction.askForRotation();
+                    else index = 0;
+
+                    curShip.setRotated(index);
+
+                    printField();
+                    Coordinates c = UserInteraction.askForCoordinates();
+                    valid = checkValidShipPlacement(curShip, c);
+
+                    if (!valid) {
+                        UserInteraction.reportWrongCoordinates();
+                        continue;
+                    }
+
+                    curShip.setCoordinates(c);
+                    placeShipOnField(c, curShip);
+                    availableShips.remove(curShip);
+                    ships.add(curShip);
+                    curShip = null;
                 }
             }
         }
-        this.sizeX = arr[0].length;
-        this.sizeY = arr.length;
-        field = arr;
-        shipCounter = counter;
+
+    private void placeShipOnField(Coordinates c,Ship s){
+        Shippart sp;
+        if(s.getRotated() == 1){
+            for(int i = 0; i < s.getSize();i++){
+                s.getParts().get(i).setCoordinates(new Coordinates(c.getX(),c.getY()+i));
+                sp = s.getParts().get(i);
+                this.field[c.getX()][c.getY()+i] = s.getParts().get(i);
+            }
+        }else{
+            for(int i = 0; i < s.getSize();i++){
+                s.getParts().get(i).setCoordinates(new Coordinates(c.getX()+i,c.getY()));
+                sp = s.getParts().get(i);
+                this.field[c.getX()+i][c.getY()] = s.getParts().get(i);
+            }
+        }
+    }
+
+    public boolean checkValidShipPlacement(Ship ship,Coordinates c){
+        try {
+            if (c.getX() >= field.length || c.getY() >= field.length || c.getX() < 0 || c.getY() < 0)
+                return false;
+
+            if (ship.getRotated() == 0) {
+                //check sticking ship out of the field
+                if (c.getX() + ship.getSize() >= field.length)
+                    return false;
+
+                //check back collision
+                if ((c.getX() - 1) >= 0) {
+                    if (field[c.getX() - 1][c.getY()] != null)
+                        return false;
+                }
+
+                //check front collision
+                if ((c.getX() + ship.getSize() < field.length)) {
+                    if (field[c.getX() + ship.getSize()][c.getY()] != null)
+                        return false;
+                }
+
+                //check right side and left side
+                for (int i = 0; i < ship.getSize(); i++) {
+                    if (c.getY()+1<field.length){
+                        if (field[c.getX() + i][c.getY() + 1] instanceof Shippart)
+                            return false;
+                }
+                if(c.getY()-1>=0){
+                if (field[c.getX() + i][c.getY() - 1] instanceof Shippart)
+                    return false;
+            }
+        }
+
+            } else {
+                //check sticking ship out of the field
+                if (c.getY() + ship.getSize() >= field.length)
+                    return false;
+
+                //check back collision
+                if((c.getY() - 1) >=0) {
+                    if (field[c.getX()][c.getY()-1] != null)
+                        return false;
+                }
+
+                //check front collision
+                if((c.getY()+ship.getSize() < field.length)){
+                    if(field[c.getX()][c.getY()+ship.getSize()] != null)
+                        return false;
+                }
+
+                //check right side and left side
+                for (int i = 0; i < ship.getSize(); i++) {
+                    if (c.getX()+1<field.length){
+                        if (field[c.getX() + 1][c.getY() + i] instanceof Shippart)
+                            return false;
+                    }
+                    if(c.getX()-1>=0){
+                        if (field[c.getX() -1][c.getY() + i] instanceof Shippart)
+                            return false;
+                    }
+                }
+            }
+        }catch(Exception ex){
+            System.out.println("Exception");
+            return false;
+        }
+        return true;
     }
 
     public int getCounter(){
-        return this.shipCounter;
+        return this.ships.size();
     }
 
     public int hit(int x, int y){
-                int i = this.field[x][y];
-        if(i==1) {
-            shipCounter--;
-            this.field[x][y] = -1;
+        int i;
+        if(this.field[x][y] instanceof DamagedShippart){
+            i = -1;
+        }else if(this.field[x][y] instanceof Shippart){
+            if(field[x][y].getParent().checkIsSunkOrJustDamaged() instanceof SunkShip) i = -3;
+            else i = 1;
+            this.field[x][y] = new DamagedShippart(this.field[x][y].getParent());
         }else{
-            this.field[x][y] = -2;
+            i = 0;
         }
         return i;
     }
 
-
-
     public int getSizeX(){
-        return this.sizeX;
+        return this.field.length;
     }
 
     public int getSizeY(){
-        return this.sizeY;
+        return this.field.length;
     }
 
-    private void printField() {
-        String str = " ";
-        for (int i = 0; i < this.field.length; i++) {
-            str+= i;
-        }
-        for (int i = 0; i < this.field.length; i++) {
-            UserInteraction.comInnLine(i + " ");
-            for (int j = 0; j < this.field[0].length; j++) {
-                UserInteraction.comInnLine(this.field[i][j] == 0 ? "~" : ">");
-            }
-            UserInteraction.com("");
-        }
+    public void printField(){
+        UserInteraction.printUserField(this.field);
     }
+
     public void printEnemyField(){
-        String str = " ";
-        for (int i = 0; i < this.field.length; i++) {
-            str+= i;
-        }
-        for (int i = 0; i < this.field.length; i++) {
-            UserInteraction.comInnLine(i + " ");
-            for (int j = 0; j < this.field[0].length; j++) {
-                if(this.field[i][j]==0 || this.field[i][j]==1){
-                    UserInteraction.comInnLine("?");
-                }else if(this.field[i][j] == -1){
-                    UserInteraction.comInnLine("✝");
-                }else{
-                    UserInteraction.comInnLine("o");
-                }
-            }
-            UserInteraction.com("");
-        }
+        UserInteraction.printEnemyField(this.field);
     }
 }

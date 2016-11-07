@@ -4,17 +4,17 @@ import javax.jws.soap.SOAPBinding;
 import java.util.ArrayList;
 
 public class Main {
-
     public static void main(String[] args) {
         Game g = new Game();
         g.createGame();
         ArrayList<Player> arr = g.start();
-        UserInteraction.com("The end");
+
+        UserInteraction.reportEnd();
 
         if(arr.get(0).getBot()){
-            UserInteraction.com("You've lost");
+            UserInteraction.reportUserLoss();
         }else{
-            UserInteraction.com("You've Won!!!! Yay!!!!");
+            UserInteraction.reportUserWin();
         }
     }
 }
