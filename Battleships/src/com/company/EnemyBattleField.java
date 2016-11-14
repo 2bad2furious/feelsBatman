@@ -14,7 +14,7 @@ public class EnemyBattleField{
     }
 
     public void insertPart(Shippart shippart){
-        field[shippart.getCoordinates().getX()][shippart.getCoordinates().getY()] = new DamagedShippart(null);
+        field[shippart.getCoordinates().getX()][shippart.getCoordinates().getY()] = new DamagedShippart(shippart.getCoordinates());
     }
 
     public int checkCoordinates(Coordinates c){
@@ -23,7 +23,4 @@ public class EnemyBattleField{
         else if(field[c.getX()][c.getX()] instanceof DamagedShippart) return 1;
         else return 0;
     }
-
-
-
 }

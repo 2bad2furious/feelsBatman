@@ -15,6 +15,7 @@ public class Hits {
     public Coordinates getCoordinates(){
         return c;
     }
+
     public int getHitValue(){
         return hitValue;
     }

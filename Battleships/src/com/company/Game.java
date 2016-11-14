@@ -7,12 +7,8 @@ import java.util.Random;
  * Created by user on 27.10.2016.
  */
 public class Game{
-    private ArrayList<Player> players;
+    private ArrayList<Player> players = new ArrayList<>();
     public static Random rn = new Random();
-
-    public Game(){
-        players = new ArrayList<>();
-    }
 
     public void createGame(){
         players.add(new Player("Bot1",true));
@@ -27,23 +23,17 @@ public class Game{
 
     private ArrayList<Player> doRound(Player p1,Player p2,int i){
         if(p1.getBot()){
-            if(p1.lastHit.getHitValue()==1){
-                //checkEnemyField what he hit and stuff
+            //todo tečky vole
 
-            }
             int a = rn.nextInt(p2.getBf().getSizeX());
             int b = rn.nextInt(p2.getBf().getSizeY());
-            int hit = p2.getBf().hit(a,b);
+            int hit = p2.hit(a,b);
 
-            p1.lastHit = new LastHit(new Coordinates(a,b),hit);
             UserInteraction.reportEnemyHit(hit,p2.getBf().getCounter());
         }else{
             Coordinates c = UserInteraction.InitializeStartOfHumanRound(p2.getBf());
-            int a = c.getX();
-            int b = c.getY();
-            int hit = p2.getBf().hit(a,b);
+            int hit = p2.hit(c.getX(),c.getY());
 
-            p1.lastHit = new LastHit(new Coordinates(a,b),hit);
             UserInteraction.reportUserHit(hit,p2.getBf().getCounter());
         }
         if(p2.getBf().getCounter()==0){

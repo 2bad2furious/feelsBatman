@@ -45,25 +45,25 @@ public class Player {
     private ArrayList<Ship> getDefaultTypes(){
         ArrayList<Ship> ships = new ArrayList<Ship>();
         ArrayList<Shippart> part = new ArrayList<Shippart>();
-        part.add(new Shippart(null));
+        part.add(new Shippart((Ship) null));
         ArrayList<Shippart> parts1 = new ArrayList<Shippart>();
-        parts1.add(new Shippart(null));
-        parts1.add(new Shippart(null));
+        parts1.add(new Shippart((Ship) null));
+        parts1.add(new Shippart((Ship) null));
         ArrayList<Shippart> parts2 = new ArrayList<Shippart>();
-        parts2.add(new Shippart(null));
-        parts2.add(new Shippart(null));
-        parts2.add(new Shippart(null));
+        parts2.add(new Shippart((Ship) null));
+        parts2.add(new Shippart((Ship) null));
+        parts2.add(new Shippart((Ship) null));
         ArrayList<Shippart> parts3 = new ArrayList<Shippart>();
-        parts3.add(new Shippart(null));
-        parts3.add(new Shippart(null));
-        parts3.add(new Shippart(null));
-        parts3.add(new Shippart(null));
+        parts3.add(new Shippart((Ship) null));
+        parts3.add(new Shippart((Ship) null));
+        parts3.add(new Shippart((Ship) null));
+        parts3.add(new Shippart((Ship) null));
         ArrayList<Shippart> parts4 = new ArrayList<Shippart>();
-        parts4.add(new Shippart(null));
-        parts4.add(new Shippart(null));
-        parts4.add(new Shippart(null));
-        parts4.add(new Shippart(null));
-        parts4.add(new Shippart(null));
+        parts4.add(new Shippart((Ship) null));
+        parts4.add(new Shippart((Ship) null));
+        parts4.add(new Shippart((Ship) null));
+        parts4.add(new Shippart((Ship) null));
+        parts4.add(new Shippart((Ship) null));
 
         ships.add(new Ship(part,"1x1").fix());
         ships.add(new Ship(parts1,"2x1").fix());
@@ -73,12 +73,26 @@ public class Player {
 
         return ships;
     }
+    public int hit(int x, int y){
+        int a = bf.hit(x,y);
+        Coordinates c = new Coordinates(x,y);
+        hits.add(new Hits(c,a));
+        if(a==1){
+            //hit
+            enemyBf.insertPart(new DamagedShippart(c));
+        }else if(a==-3){
+            //SUNK
+        }
+        return a;
+    }
 
     public EnemyBattleField getEnemyBf(){
         return this.enemyBf;
     }
-    public void insert(Coordinates c, int HitValue){
 
+    public void insert(Coordinates c, int HitValue){
+        this.hits.add(new Hits(c,HitValue));
+        this.enemyBf.insertPart(new DamagedShippart(c));
       }
 
     public ArrayList<Hits> getHits(){

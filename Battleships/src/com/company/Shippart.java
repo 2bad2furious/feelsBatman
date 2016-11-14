@@ -10,6 +10,7 @@ public class Shippart {
     public Shippart(Ship s){
         this.parent = s;
     }
+    public Shippart(Coordinates c){this.c = c;}
 
     public void setParent(Ship s){
         parent = s;

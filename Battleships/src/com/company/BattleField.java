@@ -66,6 +66,7 @@ public class BattleField {
             }
         }
 
+
     private void placeShipOnField(Coordinates c,Ship s){
         Shippart sp;
         if(s.getRotated() == 1){
