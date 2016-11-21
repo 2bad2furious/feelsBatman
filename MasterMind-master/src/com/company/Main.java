@@ -72,8 +72,8 @@ public class Main {
     }
 
     private static void showCompareResult(CompareResult cr) {
-        System.out.println("Trefil jsi " + cr.getMatchColors() + " barev " + " a " + cr.getMatchPositions() + " presnych pozic");
-        if(cr.getMatchColors()==4) {
+        System.out.println("Trefil jsi " + (cr.getMatchColors()-cr.getMatchPositions()) + " barev " + " a z toho " + cr.getMatchPositions() + " presnych pozic");
+        if(cr.getMatchPositions()==4){
             System.out.println("You are the mastermind!");
             System.exit(5);
         }else if(cr.isFinalAttempt()){
