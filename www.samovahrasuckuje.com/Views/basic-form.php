@@ -1,0 +1,1 @@
+<div class="fancy-form-div"><?php echo $form->returnHtml(); ?></div>

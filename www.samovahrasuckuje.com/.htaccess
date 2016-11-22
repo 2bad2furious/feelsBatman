@@ -1,0 +1,14 @@
+RewriteEngine On
+# RewriteBase /
+order deny,allow
+deny from all
+allow from 127.0.0.1
+allow from ::1
+allow from 192.168.1 #
+
+allow from 78.45.199.29
+allow from 195.122.201.200
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule !\.(css|js|icon|zip|rar|png|jpg|gif|pdf)$ index.php [L]
