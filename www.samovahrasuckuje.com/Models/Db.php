@@ -5,26 +5,12 @@ class Db {
     public static $spojeni;
     public static $prep;
 
-    public static function startTransakce()
-    {
-        self::$spojeni->beginTransaction();
-    }
-
-    public static function stornoTransakce()
-    {
-        self::$spojeni->rollBack();
-    }
-
-    public static function konecTransakce()
-    {
-        self::$spojeni->commit();
-    }
-
     public static function prep($dotaz){
         return self::$spojeni->prepare($dotaz);
     }
     public static function exe($prep,$parameters = array()){
         $prep->execute($parameters);
+
         return $prep->fetchAll();
     }
     public static function pripoj($host, $jmenoDatabaze, $jmenoUzivatele, $heslo)
