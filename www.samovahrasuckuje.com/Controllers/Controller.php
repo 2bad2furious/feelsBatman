@@ -2,6 +2,7 @@
 
 abstract class Controller {
 
+    protected $title = "";
     protected $view;
     protected $data = array();
     protected $parameters = array();
@@ -37,7 +38,7 @@ abstract class Controller {
     }
 
     public function hasRights() {
-        if (!($this->isLogged() && $_SESSION["user"]->admin)) {
+        if (!($this->isLogged())) {
             $this->addMessage(new Message("Nedostatečná práva!"));
             $this->redirect("/Login");
         }
@@ -64,5 +65,7 @@ abstract class Controller {
     public function nav() {
         return $this->nav;
     }
-
+    public function getTitle(){
+        return (string)"".$this->title;
+    }
 }

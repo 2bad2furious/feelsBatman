@@ -1,8 +1,7 @@
-<?php
+tohle je header
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+<?php if($logged): ?>
+<a href="/EditProfile"><?= $_SESSION["user"]->username(); ?></a><a href="/logout">Logout</a>
+<?php else: ?>
+    <a href="/login">Log in</a><a href="/register">Register</a>
+<?php endif; ?>

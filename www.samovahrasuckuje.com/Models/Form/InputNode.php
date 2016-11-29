@@ -14,7 +14,7 @@ private $type;
             }
             
             public function main(){
-                var_dump($this);
+
             }
     
     public function returnHtml(){

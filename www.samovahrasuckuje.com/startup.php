@@ -11,9 +11,13 @@ spl_autoload_register(function($class)
     else if(file_exists("Controllers/admin/" . $class . ".php")) require "Controllers/admin/" . $class . ".php";
 });
 try{
- Db::pripoj('localhost', 'dbname', 'user', 'pw');
+ Db::pripoj('localhost', 'Samsgame', 'root', '');
 } catch(PDOException $e) {
     die("Failed connecting to DB");
 }
 session_start();
 mb_internal_encoding('UTF-8');
+
+
+$user = new User("admin@admin.admin","admin","BIG ADMIN",true);
+$user->createUser();

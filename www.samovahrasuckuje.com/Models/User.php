@@ -1,60 +1,81 @@
 <?php
-class User {
 
-    public $id;
-    public $name;
+class User
+{
+
+    private $id;
+    private $name;
     private $registered = false;
     private $password;
-    public $admin;
+    private $email;
+    private $admin;
     private $uniqid;
     private $ip;
 
-    private function hash($str){
+    public function __construct($email, $password, $name = "", $admin = false)
+    {
+        $this->email = $email;
+        $this->admin = $admin;
+        $this->name = $name;
+        $this->password = $this->hash($password);
+        $this->ip = $_SERVER["REMOTE_ADDR"];
+
+        $querry = $this->validate();
+        if ($querry) {
+            $this->registered = true;
+            $this->id = $querry["id"];
+        }
+    }
+
+    public function createUser()
+    {
+        $this->uniqid = uniqid();
+
+        if (!$this->registered) {
+            Db::dotaz("INSERT INTO user(username,pw,email,uniqid,admin,description) VALUES(?,?,?,?,?,?)", array($this->name, $this->hash($this->password), $this->email, $this->uniqid, 0, " "));
+        }
+    }
+
+    private function hash($str)
+    {
         return crypt($str, '$2a$07$' . md5($this->uniqid) . '$');
     }
 
-    private function validate() {
-        $quarry = Db::dotazRadek("SELECT user_id, name, password, uniqid FROM user WHERE name = ?", array(
-            $this->name
-        ));
-        
-        if($quarry) {
+    private function exists()
+    {
+        return Db::dotazRadek("SELECT id, username, pw, uniqid FROM user WHERE email = ?", array(
+            $this->email));
+    }
+
+    private function validate()
+    {
+        $quarry = $this->exists();
+        if ($quarry) {
             $this->uniqid = $quarry["uniqid"];
-            return hash_equals($quarry["password"], crypt($this->password, $quarry["password"])) ? $quarry : false;
-        }
-        else
+            $this->name = $quarry["username"];
+            return hash_equals($quarry["pw"], crypt($this->password, $quarry["pw"])) ? $quarry : false;
+        } else
             return false;
     }
 
-       public function __construct($name, $password) {
-
-        $this->name = $name;
-        $this->password = $password;
-                $this->ip = $_SERVER["REMOTE_ADDR"];
-                            
-        $querry = Db::dotazRadek("SELECT * FROM user WHERE name = ? and password = ?",array($this->name,$this->password));
-        if($querry) {
-            $this->registered = true;
-            $this->id = $querry["user_id"];
-        }
-    }
-
-
-    public function createUser(){
-
-        $this->uniqid = uniqid();
-
-        if(!$this->registered){
-           Db::dotaz("INSERT INTO user(name,password,uniqid) VALUES(?,?,?)",array($this->name,$this->password,$this->uniqid));
-        }
-    }
-    
-    public function getIp(){
+    public function getIp()
+    {
         return $this->ip;
     }
-    
-    public function registered(){
+
+    public function registered()
+    {
         return $this->registered;
     }
-    
+
+    public function id()
+    {
+        return intval($this->id * 5 * 10000000 * pi());
+    }
+
+    public function username()
+    {
+        return $this->name;
+    }
+
 }

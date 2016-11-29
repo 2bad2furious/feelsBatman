@@ -1,52 +1,49 @@
 <?php
 require "startup.php";
+
 $url = explode("/", $_SERVER["REQUEST_URI"]);
+
 array_shift($url);
+
 $l = count($url) - 1;
+
 if (strlen($url[$l]) == 0 && count($url) > 1) {
     unset($url[$l]);
     header("Location:/" . implode("/", $url));
 }
 $name = $url[0] . "Controller";
 
-if ($name == "Controller")
-    $name = "HomeController";
+if ($name == "Controller") $name = "HomeController";
 
-if (file_exists("Controllers/" . $url[0] . "Controller.php"))
-    $controller = new $name($url);
-else
-    $controller = new ErrorController($url);
+array_shift($url);
 
-if (!$controller->isLogged() && $url[0] != "Login") {
-    $controller->forceLogged();
-}
+if (file_exists("Controllers/" . $name. ".php")) $controller = new $name($url);
+else $controller = new ErrorController($url);
 
-if($controller->nav()){
-    $headerController = new HeaderController($url);
-}
-if($controller->footer()){
-    $footerController = new FooterController($url);
-}
+if($controller->nav()) $headerController = new HeaderController($url);
 
+if($controller->footer()) $footerController = new FooterController($url);
 
-echo file_exists("Controllers/" . $url[0] . ".php");
 ?>
 <!DOCTYPE html>
-
 <html>
     <head>
         <meta charset="UTF-8">
-        <title></title>
+        <title><?= $controller->getTitle(); ?></title>
     </head>
     <body>
         <?php if (isset($headerController)): ?>
             <header>
-                Tohle je header
-
+                <?php $headerController->run();?>
             </header>
-        <?php
-        endif;
+        <?php endif;
         $controller->run();
-        ?>
+        if (isset($footerController)):?>
+    <footer>
+        <?php $footerController->run(); ?>
+    </footer>
+    <?php endif; ?>
     </body>
 </html>
+<?php var_dump($_SESSION["messages"]);
+$_SESSION["messages"] = array();

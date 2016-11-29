@@ -26,13 +26,11 @@ class Form {
     }
 
     public function hasData() {
-        if (empty($_POST))
-            return false;
-        foreach ($this->nodes as $v) {            
-                var_dump($v->main());
-                echo "<br>";
+        if (empty($_POST)) return false;
+
+        foreach ($this->nodes as $v) {
             if (!isset($_POST[$v->getName()])) {
-//                return false;
+                return false;
             }
         }
         return true;

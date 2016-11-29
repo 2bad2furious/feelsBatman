@@ -1,3 +1,4 @@
 <?php
-$c = new AddRecordController($url);
-$c->run();
+//$c = new AddRecordController($url);
+//$c->run();
+//cool thing
