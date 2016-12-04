@@ -3,6 +3,8 @@ package com.company;
 import com.company.domain.*;
 import com.sun.corba.se.impl.oa.poa.POAPolicyMediatorImpl_NR_UDS;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -77,7 +79,9 @@ public class MainTest {
 
     @org.junit.Test
     public void productOfStudentGrades() throws Exception {
-
+        assertEquals(38400000,Main.productOfStudentGrades(school.getClasses().get(0).getStudents().get(0)),0.0);
+        assertEquals(800000,Main.productOfStudentGrades(school.getClasses().get(0).getStudents().get(2)),0.0);
+        assertEquals(960000000,Main.productOfStudentGrades(school.getClasses().get(1).getStudents().get(1)),0.0);
     }
 
     @org.junit.Test
@@ -130,6 +134,8 @@ public class MainTest {
 
     @org.junit.Test
     public void getFirstPrimes() throws Exception {
+        assertEquals(Arrays.asList(new Integer(2),new Integer(3),new Integer(5), new Integer(7)),Main.getFirstPrimes(4));
+        assertEquals(Arrays.asList(new Integer(2),new Integer(3),new Integer(5), new Integer(7),new Integer(11),new Integer(13)),Main.getFirstPrimes(6));
 
     }
 

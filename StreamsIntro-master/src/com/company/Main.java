@@ -101,8 +101,11 @@ public class Main {
 
     // reduce
     public static double productOfStudentGrades(Student student) {
-       //???? return student.getGrades().stream();
-        return 0.0;
+            return student.getGrades().stream()
+                    .filter(Grade->Grade.getType()!=GradeType.F)
+                    .map(Grade->Grade.getType().getValue())
+                .reduce(1,(carry, val) -> val*carry)
+                    .doubleValue();
     }
 
 
@@ -123,7 +126,11 @@ public class Main {
 
     // limit, IntStream.iterate, boxed
     public static List<Integer> getFirstPrimes(int howMany) {
-     return new ArrayList<Integer>();
-        ///??????????A???
+        return IntStream
+                .iterate(2,i->i+1)
+                .filter(Main::isPrime)
+                .limit(howMany)
+                .boxed()
+                .collect(toList());
     }
 }
