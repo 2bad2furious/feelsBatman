@@ -34,7 +34,7 @@ abstract class Controller {
     }
 
     protected function addMessage(Message $message) {
-        $_SESSION["messages"][] = $message;
+        Message::add($message);
     }
 
     public function hasRights() {

@@ -1,7 +1,7 @@
-tohle je header
-
+<a id="headerHome" href="/">Home</a>
 <?php if($logged): ?>
-<a href="/EditProfile"><?= $_SESSION["user"]->username(); ?></a><a href="/logout">Logout</a>
+<a id="headerGoToEditProfile" href="/EditProfile"><?= $_SESSION["user"]->username(); ?></a>
+    <a id="headerLogOut" href="/logout">Logout</a>
 <?php else: ?>
-    <a href="/login">Log in</a><a href="/register">Register</a>
+    <a id="headerLogIn" href="/login">Log in</a><a id="headerRegister" href="/register">Register</a>
 <?php endif; ?>

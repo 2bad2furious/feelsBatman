@@ -11,6 +11,7 @@ class User
     private $admin;
     private $uniqid;
     private $ip;
+    private $time;
 
     public function __construct($email, $password, $name = "", $admin = false)
     {
@@ -19,6 +20,7 @@ class User
         $this->name = $name;
         $this->password = $this->hash($password);
         $this->ip = $_SERVER["REMOTE_ADDR"];
+        $this->time = $_SERVER["REQUEST_TIME"];
 
         $querry = $this->validate();
         if ($querry) {
@@ -56,6 +58,18 @@ class User
             return hash_equals($quarry["pw"], crypt($this->password, $quarry["pw"])) ? $quarry : false;
         } else
             return false;
+    }
+
+    public function check(){
+        if($_SERVER["REMOTE_ADDR"]!=$this->ip) return false;
+        if($_SERVER["REQUEST_TIME"]>($this->time+3600)) return false;
+
+        $this->refresh();
+        return true;
+    }
+
+    private function refresh(){
+        $this->time = $_SERVER["REQUEST_TIME"];
     }
 
     public function getIp()

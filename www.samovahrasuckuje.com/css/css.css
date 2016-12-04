@@ -1,0 +1,73 @@
+@font-face {
+    src:url("/fonts/OpenSans-Light.ttf");
+    font-family: "Open sans";
+}
+html,body{
+    padding:0;
+    margin:0;
+}
+*{
+    color:black;
+    font-size:17px;
+    font-family: "Open sans";
+}
+form.fancyAf{
+    text-align: center;
+}
+form.fancyAf *{
+font-size:15px;
+    padding:2px;
+    border-radius:4px;
+    border:1px black solid;
+    width:250px;
+    color:black;
+    border-bottom:0;
+}
+form.fancyAf *:focus {
+    color: blue;
+    border-color: blue;
+}
+form.fancyAf *:nth-last-child(3),form.fancyAf *:last-child{
+    border-bottom:1px black solid;
+}
+form.fancyAf textarea{
+    max-width:250px;
+    min-height:50px;
+}
+form.fancyAf h1,form.fancyAf h2,form.fancyAf h3,form.fancyAf h4,form.fancyAf h5{
+    margin:auto;
+    border:0;
+}
+header{
+    display:block;
+    padding:5px;
+    border-bottom:2px solid black;
+}
+header a{
+    padding:2px;
+    text-decoration: none;
+}
+header a:hover{
+    color:#666;
+    text-decoration: underline;
+}
+footer{
+
+}
+.messages{
+    border:2px black solid;
+    padding:5px;
+    text-align:center;
+    display:none;
+
+    background:white;
+    position:fixed;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.container{
+    border:1px solid transparent;
+}
