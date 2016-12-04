@@ -37,7 +37,7 @@ public class Main {
     // map
     public static Integer getMultiplyStudentAge(List<Student> students) {
         return students.stream()
-                .map(Student -> Student.getAge())
+                .map(Student::getAge)
                 .reduce(1,(carry,age) -> carry * age);
     }
 
