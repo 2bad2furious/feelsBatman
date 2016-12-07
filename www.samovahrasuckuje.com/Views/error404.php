@@ -7,3 +7,4 @@ AHOJ 404
  * and open the template in the editor.
  */
 
+header("HTTP/1.0 404 Not Found");

@@ -17,16 +17,13 @@ if (strlen($url[$l]) == 0 && count($url) > 1) {
 }
 $name = $url[0] . "Controllers";
 
-if ($name == "Controllers") $name = "HomeController";
+if ($name == "Controllers") $name = "ErrorController";
 
 array_shift($url);
 
 if (file_exists("Controllers/" . $name. ".php")) $controller = new $name($url);
 else $controller = new ErrorController($url);
 
-if($controller->nav()) $headerController = new HeaderController($url);
-
-if($controller->footer()) $footerController = new FooterController($url);
 
 ?>
 <!DOCTYPE html>

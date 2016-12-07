@@ -28,10 +28,8 @@ public class Main {
     // map - method reference
     public static List<Integer> getStudentAges(List<Student> students) {
         return students.stream()
-                .mapToInt(Student::getAge)
-                .collect(()-> new ArrayList<>(),
-                        (list,age) -> list.add(age),
-                        (list1,list2)-> list1.addAll(list2));
+                .map(Student::getAge)
+                .collect(toList());
     }
 
     // map
@@ -44,15 +42,15 @@ public class Main {
     // filter
     public static List<Student> getStudentsWithMinimumAge(List<Student> students, int minAge) {
         return students.stream()
-                .filter(Student -> Student.getAge()== minAge)
+                .filter(Student -> Student.getAge()>= minAge)
                 .collect(toList());
     }
 
     // filter and possible double method references
     public static List<Integer> getPrimeAges(List<Student> students) {
         return students.stream()
-                .filter(Student -> isPrime(Student.getAge()))
                 .map(Student::getAge)
+                .filter(Main::isPrime)
                 .collect(toList());
     }
 
@@ -67,13 +65,7 @@ public class Main {
 
     // comparing (sorted)
     public static List<Integer> getSortedAges(List<Student> students) {
-        /*return students.stream()
-                .sorted((s1,s2) -> s1.getAge()-s2.getAge())
-                .mapToInt(Student::getAge)
-                .collect(()-> new ArrayList<>(),
-                        (list,age) -> list.add(age),
-                        (list1,list2)-> list1.addAll(list2));
-*/
+
         return students.stream()
                 .map(Student::getAge)
                 .sorted()
@@ -82,9 +74,9 @@ public class Main {
 
     // count
     public static long countMaleStudents(List<Student> students) {
-        return (long) students.stream()
+        return (long)  students.stream()
                 .filter(Student -> Student.getGender() == Gender.MALE)
-                .mapToInt(Student::getAge)
+                .map(Student::getAge)
                 .count();
     }
 
@@ -95,7 +87,7 @@ public class Main {
                 .filter(Student->Student.getGender()==Gender.FEMALE)
                 .mapToInt(Student::getAge)
                 .average()
-                .getAsDouble();
+                .orElse(0.0);
     }
 
 

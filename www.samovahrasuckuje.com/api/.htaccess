@@ -1,7 +1,5 @@
 RewriteEngine On
 
-
-
 # RewriteBase /
 order deny,allow
 deny from all
