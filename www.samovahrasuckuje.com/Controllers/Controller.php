@@ -8,9 +8,11 @@ abstract class Controller {
     protected $parameters = array();
     protected $nav = true;
     protected $footer = true;
+    protected $lang;
 
-    public function __construct(Array $url = array()) {
+    public function __construct(Array $url = array(),Language $lang) {
         $this->parameters = $url;
+        $this->lang = $lang;
         $this->main();
     }
 
@@ -38,15 +40,12 @@ abstract class Controller {
     }
 
     public function hasRights() {
-        if (!($this->isLogged())) {
-            $this->addMessage(new Message("Nedostatečná práva!"));
-            $this->redirect("/Login");
-        }
+       //isNeeded?
     }
 
     public function forceLogged() {
-        if (!$this->isLogged()) {
-            $this->addMessage(new Message("Nedostatečná práva!"));
+        if (!($this->isLogged())) {
+            $this->addMessage(new Message($this->lang->insufficientPermission));
             $this->redirect("/Login");
         }
     }

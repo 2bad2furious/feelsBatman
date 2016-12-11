@@ -10,15 +10,16 @@ import java.util.Random;
 public class Game {
     private Field field;
 
-    public Game() {
-        int size = 20;
-        int size2 = 10;
-        int count = 1;
-        field = new Field(size2, size, count);
+    public Game(int rows, int columns, int mines) {
+
+        field = new Field(rows, columns, mines);
+
         boolean result = startRound();
 
         if (result) UI.reportWin();
         else UI.reportMineExplosion();
+
+        UI.printField(field.getList());
 
         System.exit(1);
     }
@@ -63,9 +64,13 @@ public class Game {
             if (cmd.length != 3) return false;
             if (!field.isOnField(Integer.parseInt(cmd[0]), Integer.parseInt(cmd[1]))) return false;
             cmd[2] = cmd[2].toLowerCase();
-            if (!cmd[2].equals("reveal") && !cmd[2].equals("r") && !cmd[2].equals("flag") && !cmd[2].equals("f") && !cmd[2].equals("question") && !cmd[2].equals("q")) {
-                return false;
-            }
+            if (!cmd[2].equals("reveal")
+                    && !cmd[2].equals("r")
+                    && !cmd[2].equals("flag")
+                    && !cmd[2].equals("f")
+                    && !cmd[2].equals("question")
+                    && !cmd[2].equals("q")
+                    ) return false;
         } catch (Exception ex) {
             return false;
         }

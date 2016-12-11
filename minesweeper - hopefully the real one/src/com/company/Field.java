@@ -21,8 +21,8 @@ public class Field {
 
     public Field(int size1, int size2, int count) {
         bombCounter = count;
-        field = generate(size1, size2, count);
-        UI.printField(field);
+
+        generateField(size1,size2);
     }
 
     public int reveal(int x, int y) {
@@ -56,45 +56,23 @@ public class Field {
     }
 
     public boolean checkForAnythingButBombNotRevealed() {
-        int a = (int) field.stream()
+        return ((int) field.stream()
                 .flatMap(i -> i.stream())
                 .filter(v -> v.status() != Status.REVEALED)
-                .count();
-        int b = bombCounter;
-
-        return (a == b);
+                .count() == bombCounter);
     }
 
-    private List<List<FieldValue>> generate(int size1, int size2, int count) {
-        List<List<FieldValue>> arr = new ArrayList<>();
-        for (int i = 0; i < size1; i++) {
-            arr.add(i, new ArrayList<>());
-            for (int j = 0; j < size2; j++) {
-                arr.get(i).add(j, new FieldValue(-1, -1, 0));
-            }
-        }
+    private void generateField(int size1, int size2) {
+        field = initField(size1,size2);
+        insertMines();
+        countFieldValues();
+    }
 
-        Random rn = new Random();
-        int num;
-        int num2;
-
-        while (count > 0) {
-            num = Math.abs(rn.nextInt(size1));
-            num2 = Math.abs(rn.nextInt(size2));
-
-
-            if (arr.get(num).get(num2).locx == -1 && arr.get(num).get(num2).locy == -1) {
-                arr.get(num).set(num2, new FieldValue(num, num2, -1));
-                count--;
-            }
-        }
-
-        field = arr;
-
-        for (int i = 0; i < arr.size(); i++) {
-            for (int j = 0; j < arr.get(i).size(); j++) {
-                if (arr.get(i).get(j).getVal() != -1) {
-                    arr.get(i).set(j, new FieldValue(i, j, (
+    private void countFieldValues(){
+        for (int i = 0; i < field.size(); i++) {
+            for (int j = 0; j < field.get(i).size(); j++) {
+                if (field.get(i).get(j).getVal() != -1) {
+                    field.get(i).set(j, new FieldValue(i, j, (
                             (int) getSurroundings(i, j)
                                     .filter(k -> k.isPresent())
                                     .filter(k -> k.get().getVal() == -1)
@@ -102,6 +80,34 @@ public class Field {
                 }
             }
 
+        }
+    }
+
+    private void insertMines(){
+        Random rn = new Random();
+        int num;
+        int num2;
+        int count = bombCounter;
+
+        while (count > 0) {
+            num = Math.abs(rn.nextInt(field.size()));
+            num2 = Math.abs(rn.nextInt(field.get(0).size()));
+
+            if (field.get(num).get(num2).locx == -1 && field.get(num).get(num2).locy == -1) {
+                field.get(num).set(num2, new FieldValue(num, num2, -1));
+                count--;
+            }
+        }
+
+    }
+
+    private List<List<FieldValue>> initField(int size1, int size2){
+        List<List<FieldValue>> arr = new ArrayList<>();
+        for (int i = 0; i < size1; i++) {
+            arr.add(i, new ArrayList<>());
+            for (int j = 0; j < size2; j++) {
+                arr.get(i).add(j, new FieldValue(-1, -1, 0));
+            }
         }
         return arr;
     }

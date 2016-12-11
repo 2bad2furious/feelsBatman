@@ -12,12 +12,4 @@ class Globals
         return ceil($id/50000000/pi());
         //opak User->id();
     }
-
-    public static function errorMessage(){
-       return new Message("Something went wrong, please repeat the action or contact our support staff",Message::ERROR);
-    }
-
-    public static function noFormChange(){
-        return new Message("No change of data detected, if this is nto correct, please contact our support staff",Message::WARN);
-    }
 }

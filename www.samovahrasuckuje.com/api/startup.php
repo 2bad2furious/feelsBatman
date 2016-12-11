@@ -18,9 +18,6 @@ try {
 session_start();
 mb_internal_encoding('UTF-8');
 
-if (!isset($_SESSION["messages"]))
-    $_SESSION["messages"][0] = new Message("Welcome", Message::OK);
-
 if (isset($_SESSION["user"]) && !$_SESSION["user"]->check()) {
     unset($_SESSION["user"]);
     Message::add(new Message("Your connection has been reset to improve your account's security, please login in again", Message::WARN));

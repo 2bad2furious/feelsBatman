@@ -7,7 +7,7 @@ class RegisterController extends Controller
         if($this->isLogged()){
             $this->redirect("/");
         }
-        $form = UserManager::returnRegisterForm($_POST);
+        $form = UserManager::returnRegisterForm($this->lang);
         $reason = "";
         //TODO ajax? name checking
         //TODO input check
@@ -16,14 +16,14 @@ class RegisterController extends Controller
             $valid = true;
             try{
                 if($data["pw"]!=$data["pw2"]) {
-                    $reason = "Passwords don't match.";
+                    $reason = $this->lang->registerErrorPasswords;
                     $valid = false;
                 }
             $user = new User($data["email"],$data["pw"],$data["username"]);
             $user->createUser();
             }catch(Exception $ex){
             $valid = false;
-                $reason = "There was an error creating new user.".$ex->getMessage();
+                $reason = $this->lang->generalFailure.$ex->getMessage();
             }
             if($valid){
                 $this->redirect("/Login");

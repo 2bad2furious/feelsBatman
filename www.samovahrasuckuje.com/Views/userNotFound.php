@@ -1,1 +1,1 @@
-User was not found
+<?= $data["userNotFound"];

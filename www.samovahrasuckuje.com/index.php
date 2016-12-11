@@ -15,18 +15,18 @@ if (strlen($url[$l]) == 0 && count($url) > 1) {
     unset($url[$l]);
     header("Location:/" . implode("/", $url));
 }
-$name = $url[0] . "Controllers";
+$name = $url[0] . "Controller";
 
-if ($name == "Controllers") $name = "HomeController";
+if ($name == "Controller") $name = "HomeController";
 
 array_shift($url);
 
-if (file_exists("Controllers/" . $name. ".php")) $controller = new $name($url);
-else $controller = new ErrorController($url);
+if (file_exists("Controllers/" . $name. ".php")) $controller = new $name($url,$lang);
+else $controller = new ErrorController($url,$lang);
 
-if($controller->nav()) $headerController = new HeaderController($url);
+if($controller->nav()) $headerController = new HeaderController($url,$lang);
 
-if($controller->footer()) $footerController = new FooterController($url);
+if($controller->footer()) $footerController = new FooterController($url,$lang);
 
 ?>
 <!DOCTYPE html>

@@ -2,19 +2,19 @@
 
 class UserManager {
 
-    public static function returnLoginForm($email=""){
+    public static function returnLoginForm($email="", Language $lang){
         $loginForm = new Form("Login", "login");
-        $loginForm->addNode(new InputNode("email","Enter your email","email",$email,"required"));
-        $loginForm->addNode(new InputNode("password", "Enter your password", "password","","required"));
+        $loginForm->addNode(new InputNode("email",$lang->emailLabel,"email",$email,"required"));
+        $loginForm->addNode(new InputNode("password", $lang->passwordLabel, "password","","required"));
         return $loginForm;
     }
 
-    public static function returnRegisterForm(){
-        $registerForm = new Form("Register a new user","Register now!");
-        $registerForm->addNode(new InputNode("username","Enter your username","text",(isset($_POST["username"]))?$_POST["username"]:""));
-        $registerForm->addNode(new InputNode("pw","Enter your password","password","","required"));
-        $registerForm->addNode(new InputNode("pw2","Enter your password once again","password","","required"));
-        $registerForm->addNode(new InputNode("email","Enter your email address","email",((isset($_POST["email"]))?$_POST["email"]:""),"required"));
+    public static function returnRegisterForm(Language $lang){
+        $registerForm = new Form("Register a new user",$lang->registerFormTitle);
+        $registerForm->addNode(new InputNode("username",$lang->usernameLabel,"text",(isset($_POST["username"]))?$_POST["username"]:""));
+        $registerForm->addNode(new InputNode("pw",$lang->passwordLabel,"password","","required"));
+        $registerForm->addNode(new InputNode("pw2",$lang->password2Label,"password","","required"));
+        $registerForm->addNode(new InputNode("email",$lang->emailLabel,"email",((isset($_POST["email"]))?$_POST["email"]:""),"required"));
         return $registerForm;
     }
 
@@ -22,11 +22,11 @@ class UserManager {
         return Db::dotazRadek("SELECT username,description FROM user WHERE id=?",array(Globals::parseId($fakeid)));
     }
 
-    public static function returnProfileEditorForm($data){
+    public static function returnProfileEditorForm($data, Language $lang){
         $form = new Form("Edit your profile","edit");
-        $form->addNode(new InputNode("username","Your username","text",$data["username"],"required"));
-        $form->addNode(new TextareaNode("description","Description of your profile",$data["description"]));
-        $form->addNode(new UploadNode("file","Upload or something","image",0));
+        $form->addNode(new InputNode("username",$lang->usernameLabel,"text",$data["username"],"required"));
+        $form->addNode(new TextareaNode("description",$lang->profileDescriptionLabel,$data["description"]));
+        $form->addNode(new UploadNode("file",$lang->profileUploadLabel,"image",0));
         return $form;
     }
 

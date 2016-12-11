@@ -15,6 +15,7 @@ class UController extends Controller
             $this->view = "userInfo";
             $this->data["data"] = $user;
         }else {
+            $this->data["data"] = array("userNotFound"=>$this->lang->userNotFound);
             $this->view = "userNotFound";
         }
     }

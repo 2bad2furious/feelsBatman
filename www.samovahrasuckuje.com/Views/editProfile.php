@@ -1,7 +1,6 @@
 <img id="preview"
      src="/upload/prof_pics/<?= (file_exists("upload/prof_pics/" . Globals::parseId($_SESSION["user"]->id()))) ? Globals::parseId($_SESSION["user"]->id()) . ".png" : "def.jpg" ?>"><?= $form->returnHtml(); ?>
 <script>
-
     $("#preview").on("load", function () {
         function callback() {
             console.info($("#preview"))
