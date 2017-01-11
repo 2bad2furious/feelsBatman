@@ -20,7 +20,7 @@ class RegisterController extends Controller
                     $valid = false;
                 }
             $user = new User($data["email"],$data["pw"],$data["username"]);
-            $user->createUser();
+            $valid = $user->createUser();
             }catch(Exception $ex){
             $valid = false;
                 $reason = $this->lang->generalFailure.$ex->getMessage();

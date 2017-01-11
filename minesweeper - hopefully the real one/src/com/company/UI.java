@@ -14,39 +14,45 @@ public class UI {
     private static Scanner sc = new Scanner(System.in);
 
     public static void printField(List<List<FieldValue>> arr) {
-        //print
-        System.out.print("___");
-        IntStream.range(0,arr.get(0).size()).forEach(num->System.out.print(" "+num+(((""+num).length()==1)?" ":"")+"|"));
-        System.out.println();
+        printYnumbers(arr.get(0).size());
 
         IntStream.range(0, arr.size()).forEach(i -> {
-            System.out.print(i+(((""+i).length()==1)?" ":"") + "| ");
-            arr.get(i).forEach(v -> {
-                if (v.status() == Status.DEFAULT) System.out.print("~");
-                else if (v.status() == Status.FLAGGED) System.out.print("F");
-                else if (v.status() == Status.QUESTIONED) System.out.print("?");
-                else if (v.status() == Status.REVEALED) System.out.print(v.getVal());
-                System.out.print(" | ");
-            });
+            System.out.print(i+twoDigitsCompletion(i) + "| ");
+            arr.get(i).forEach(v -> normalPrint(v));
             System.out.println();
         });
     }
 
     public static void printRevealedField(List<List<FieldValue>> arr){
-        System.out.print("___");
-        IntStream.range(0,arr.get(0).size()).forEach(num->System.out.print(" "+num+(((""+num).length()==1)?" ":"")+"|"));
-        System.out.println();
+        printYnumbers(arr.get(0).size());
 
         IntStream.range(0, arr.size()).forEach(i -> {
-            System.out.print(i+(((""+i).length()==1)?" ":"") + "| ");
-            arr.get(i).forEach(v -> {
-                if(v.getVal()==-1) System.out.print("B");
-                else if(v.status()==Status.REVEALED) System.out.print(v.getVal());
-                else System.out.print("~");
-                System.out.print(" | ");
-            });
+            System.out.print(i+twoDigitsCompletion(i) + "| ");
+            arr.get(i).forEach(v -> printRevealed(v));
             System.out.println();
         });
+    }
+    private static void printRevealed(FieldValue v){
+            if(v.getVal()==-1) System.out.print("B");
+            else if(v.status()==Status.REVEALED) System.out.print(v.getVal());
+            else System.out.print("~");
+            System.out.print(" | ");
+    }
+    private static void normalPrint(FieldValue v){
+            if (v.status() == Status.DEFAULT) System.out.print("~");
+            else if (v.status() == Status.FLAGGED) System.out.print("F");
+            else if (v.status() == Status.QUESTIONED) System.out.print("?");
+            else if (v.status() == Status.REVEALED) System.out.print(v.getVal());
+            System.out.print(" | ");
+    }
+    private static void printYnumbers(int i){
+        System.out.print("___");
+        IntStream.range(0,i).forEach(num->{System.out.print(" "+num+twoDigitsCompletion(num)+"|");});
+        System.out.println();
+    }
+
+    private static String twoDigitsCompletion(int num){
+       return ((""+num).length()==1)?" ":"";
     }
 
     public static String askForLoc() {

@@ -9,6 +9,7 @@ import java.util.Random;
  */
 public class Game {
     private Field field;
+    private AI ai;
 
     public Game(int rows, int columns, int mines) {
 
@@ -19,9 +20,38 @@ public class Game {
         if (result) UI.reportWin();
         else UI.reportMineExplosion();
 
-        UI.printField(field.getList());
+        UI.printRevealedField(field.getList());
 
         System.exit(1);
+    }
+
+    private boolean startAIRound(){
+        String s = ai.tryNewGuess(field);
+        if (isCmdValid(s)) {
+            String[] string = s.split(" ");
+            int p1 = Integer.parseInt(string[0]);
+            int p2 = Integer.parseInt(string[1]);
+            String cmd = string[2];
+            if (field.isRevealed(p1, p2)) {
+                throw new IllegalArgumentException("It is already revealed");
+            }
+            if (cmd.equals("r") || cmd.equals("reveal")) {
+
+                if (field.isFlagged(p1, p2)) throw new IllegalArgumentException("It is flagged");
+                else if (field.reveal(p1, p2) == -1) return false; //Lose
+
+            } else if (cmd.equals("q") || cmd.equals("question")) {
+                field.question(p1, p2);
+            } else if (cmd.equals("f") || cmd.equals("flag")) {
+                field.flag(p1, p2);
+            } else throw new IllegalArgumentException("Something happened");
+
+            if (field.checkForAnythingButBombNotRevealed()) return true; //Win
+
+        } else {
+            throw new IllegalArgumentException(s+"is not valid");
+        }
+        return startAIRound();
     }
 
     private boolean startRound() {

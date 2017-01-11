@@ -8,8 +8,10 @@ abstract class Controller {
     protected $parameters = array();
     protected $nav = false;
     protected $footer = false;
+    protected $lang;
 
-    public function __construct(Array $url = array()) {
+    public function __construct(Array $url = array(),Language $lang) {
+        $this->lang = $lang;
         $this->parameters = $url;
         $this->main();
     }

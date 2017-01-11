@@ -129,7 +129,7 @@ public class Field {
                 );
     }
 
-    private Stream<Optional<FieldValue>> getSurroundings(int x, int y) {
+    public Stream<Optional<FieldValue>> getSurroundings(int x, int y) {
         List<Optional<FieldValue>> result = new ArrayList<>();
         result.add(getOpt(x - 1, y + 1));
         result.add(getOpt(x - 1, y));

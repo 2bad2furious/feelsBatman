@@ -1,0 +1,11 @@
+RewriteEngine On
+ RewriteBase /
+
+# Redirect -xampp folder to https
+#RewriteCond %{HTTPS} !=on
+#RewriteRule ^(.*) https://%{SERVER_NAME}/$1 [R,L]
+
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule !\.(css|js|icon|zip|rar|png|jpg|gif|pdf)$ index.php [L]

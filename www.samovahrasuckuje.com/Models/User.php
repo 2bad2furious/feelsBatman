@@ -34,7 +34,10 @@ class User
         $this->uniqid = uniqid();
 
         if (!$this->registered) {
-            Db::dotaz("INSERT INTO user(username,pw,email,uniqid,admin,description) VALUES(?,?,?,?,?,?)", array($this->name, $this->hash($this->password), $this->email, $this->uniqid, 0, " "));
+           $q =Db::dotaz("INSERT INTO user(username,pw,email,uniqid,admin,description) VALUES(?,?,?,?,?,?)", array($this->name, $this->hash($this->password), $this->email, $this->uniqid, 0, " "));
+           return boolval($q);
+        }else{
+            return false;
         }
     }
 

@@ -21,8 +21,9 @@ class Language{
     public $passwordLabel = "Enter your password";
     public $password2Label = "Enter your password again";
     public $usernameLabel = "Enter your username";
-    public $registerFormLabel = "Register now!";
+    public $registerFormTitle = "Register now!";
     public $registerErrorPasswords = "Passwords don't match";
+    public $formHasNoData = "Form has no data";
     public $profileDescriptionLabel = "Description of your profile";
     public $profileUploadLabel = "Upload or something";
     public $headerHome = "Home";
