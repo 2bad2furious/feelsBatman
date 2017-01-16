@@ -51,7 +51,8 @@ if($controller->footer()) $footerController = new FooterController($url,$lang);
         <main>
             <div class="messages">
                 <?php foreach($_SESSION["messages"] as $v): ?>
-                    <span class="<?= ($v->type()==Message::OK)?"message-ok":"message-error" ?>"><?= $v->text(); ?></span>
+                    <span class="<?= ($v->type()==Message::OK)?"message-ok":"message-error" ?>">
+                        <?= $v->text(); ?></span>
                 <?php endforeach; $_SESSION["messages"] = array(); ?>
             </div>
             <div class="container">

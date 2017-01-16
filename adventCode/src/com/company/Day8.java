@@ -1,74 +1,82 @@
 package com.company;
 
+import java.util.stream.IntStream;
+
 /**
  * Created by user on 10.01.2017.
  */
 public class Day8 {
-    public static int solve(){
-        String[] s,s2;
+    public static int solve() {
+        String[] s, s2;
         char[][] arr = new char[6][50];
         String cmd;
-        char remember;
-        int length,index;
-        for (String str:getAltInput().split("\n")) {
-            printArr(arr);
+        char remember, remember2;
+        int length, index;
+        for (String str : getInput().split("\n")) {
             s = str.split(" ");
             cmd = s[0];
-            if(cmd.equals("rect")){
+            if (cmd.equals("rect")) {
                 s2 = s[1].split("x");
                 for (int i = 0; i < Integer.parseInt(s2[1]); i++) {
                     for (int j = 0; j < Integer.parseInt(s2[0]); j++) {
                         arr[i][j] = '#';
-                        printArr(arr);
                     }
                 }
-            }else if(cmd.equals("rotate")){
+            } else if (cmd.equals("rotate")) {
                 cmd = s[1];
                 index = Integer.parseInt(s[2].split("=")[1]);
-                length = Integer.parseInt(s[s.length-1]);
+                length = Integer.parseInt(s[s.length - 1]);
                 remember = ' ';
-                if(s[1].equals("row")){
-                    for (int k = 0; k < length; k++) {
-                        int a = arr[0].length;
-                        int b = arr.length;
-                        arr[0][index] = arr[arr[0].length - 1][index];
-                        for (int i = 1; i < arr[0].length; i++) {
-                            arr[i][index] = arr[i - 1][index];
+                remember2 = ' ';
+                if (cmd.equals("column")) {
+                    for (int i = 0; i < length; i++) {
+                        remember = arr[0][index];
+                        arr[0][index] = arr[arr.length - 1][index];
+                        for (int j = 1; j < arr.length; j++) {
+                            remember2 = arr[j][index];
+                            arr[j][index] = remember;
+                            remember = remember2;
                         }
                     }
-
-                }else if(s[1].equals("column")){
-                    for (int k = 0; k < length; k++) {
+                } else if (cmd.equals("row")) {
+                    for (int j = 0; j < length; j++) {
+                        remember = arr[index][0];
                         arr[index][0] = arr[index][arr[index].length - 1];
                         for (int i = 1; i < arr[index].length; i++) {
-                            arr[index][i] = arr[index][i - 1];
+                            remember2 = arr[index][i];
+                            arr[index][i] = remember;
+                            remember = remember2;
                         }
                     }
-
                 }
             }
         }
+        printArr(arr);
         int counter = 0;
-        for (char[] carr:arr) {
-            for (char c:carr) {
-                if(c!=' ')
+        for (char[] carr : arr) {
+            for (char c : carr) {
+                if (c != '\u0000')
                     counter++;
             }
         }
         return counter;
     }
 
-    private static void printArr(char[][] arr){
-        for (char[] carr:arr) {
-            for (char c:carr) {
-                System.out.print(c);
+    private static void printArr(char[][] arr) {
+        for (char[] arr2 : arr) {
+            for (char c : arr2) {
+                System.out.print(":");
+                System.out.print(((c == '\u0000') ? " " : 'x'));
+                System.out.print("");
             }
             System.out.println();
         }
-        System.out.println("------------------------------------------");
+        System.out.println();
+        IntStream.range(0, 50).forEach((a) -> System.out.print("-"));
+        System.out.println();
     }
 
-    private static String getInput(){
+    private static String getInput() {
         return "rect 1x1\n" +
                 "rotate row y=0 by 7\n" +
                 "rect 1x1\n" +
@@ -265,7 +273,7 @@ public class Day8 {
                 "rotate column x=1 by 5";
     }
 
-    private static String getAltInput(){
-        return "rect 3x2\n"+"rotate column x=1 by 1\n"+"rotate row y=0 by 4\n"+"rotate column x=1 by 1";
+    private static String getAltInput() {
+        return "rect 3x2\n" + "rotate column x=1 by 1\n" + "rotate row y=0 by 4\n" + "rotate column x=1 by 1";
     }
 }

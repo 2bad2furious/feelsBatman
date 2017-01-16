@@ -13,7 +13,7 @@ public class Day4 {
         String[] a, keep;
         String codeAndSum, string, string2;
 
-        for (String str : getInput().split("\n")) {
+        for (String str : getAltInput().split("\n")) {
             a = str.split("-");
             keep = new String[a.length - 1];
             for (i = 0; i < a.length - 1; i++) {

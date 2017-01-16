@@ -30,7 +30,7 @@ $_SESSION["language"] = get_class($lang);
 
 if (isset($_SESSION["user"]) && !$_SESSION["user"]->check()) {
     unset($_SESSION["user"]);
-    Message::add(new Message($lang->LoginTimeout, Message::WARN));
+    Message::add(new Message($lang->loginTimeout, Message::WARN));
     $_SESSION["url"] = $_SERVER["REQUEST_URI"];
     header("Location:/login");
 }
