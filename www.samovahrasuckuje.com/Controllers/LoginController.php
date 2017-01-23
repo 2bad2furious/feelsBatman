@@ -17,7 +17,11 @@ class LoginController extends Controller
                 $_SESSION["user"] = $user;
                 $this->addMessage(new Message($this->lang->profileLoginSuccess, Message::OK));
 
-                if (isset($_SESSION["url"])) $this->redirect($_SESSION["url"]);
+                if (isset($_SESSION["url"])){
+                    $url = $_SESSION["url"];
+                    unset($_SESSION["url"]);
+                    $this->redirect($url);
+                }
                 else $this->redirect("/");
 
             } else {

@@ -11,33 +11,6 @@ html,body{
     font-size:17px;
     font-family: "Open sans";
 }
-form.fancyAf{
-    text-align: center;
-}
-form.fancyAf *{
-font-size:15px;
-    padding:2px;
-    border-radius:4px;
-    border:1px black solid;
-    width:250px;
-    color:black;
-    border-bottom:0;
-}
-form.fancyAf *:focus {
-    color: blue;
-    border-color: blue;
-}
-form.fancyAf *:nth-last-child(3),form.fancyAf *:last-child{
-    border-bottom:1px black solid;
-}
-form.fancyAf textarea{
-    max-width:250px;
-    min-height:50px;
-}
-form.fancyAf h1,form.fancyAf h2,form.fancyAf h3,form.fancyAf h4,form.fancyAf h5{
-    margin:auto;
-    border:0;
-}
 header{
     display:block;
     padding:5px;
@@ -70,4 +43,9 @@ footer{
 
 .container{
     border:1px solid transparent;
+}
+.mapContainer{
+    min-width:60vw;
+    min-height:400px;
+    overflow:auto;
 }

@@ -45,6 +45,7 @@ abstract class Controller {
 
     public function forceLogged() {
         if (!($this->isLogged())) {
+            $_SESSION["url"] = $_SERVER["REQUEST_URI"];
             $this->addMessage(new Message($this->lang->insufficientPermission));
             $this->redirect("/Login");
         }

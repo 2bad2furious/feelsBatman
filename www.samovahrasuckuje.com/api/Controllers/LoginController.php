@@ -16,9 +16,9 @@ class LoginController extends Controller
             $data = $form->getData();
             $user = new User(null, $data["password"], $data["email"]);
             if ($user - registered()) {
-                echo json_encode($user->id());
+                echo json_encode(array("id"=>$user->id(),"username"=>$user->username()));
             } else {
-                echo json_encode(0);
+                echo json_encode(array("id"=>0,"username"=>""));
             }
         }
     }

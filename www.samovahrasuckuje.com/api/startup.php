@@ -11,7 +11,7 @@ spl_autoload_register(function ($class) {
     else if (file_exists("../Controllers/admin/" . $class . ".php")) require "../Controllers/admin/" . $class . ".php";
 });
 try {
-    Db::pripoj('localhost', 'Samsgame', 'root', '');
+    Db::pripoj('wm73.wedos.net', 'd82268_game', 'w82268_game', 'ctXkhHT5');
 } catch (PDOException $e) {
     die("Failed connecting to DB");
 }

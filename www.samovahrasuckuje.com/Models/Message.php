@@ -9,7 +9,7 @@ class Message {
     const ERROR = "m-error";
     const WARN = "m-warning";
 
-    public function __construct(string $text, $type = self::OK){
+    public function __construct($text, $type = self::OK){
         $this->text = $text; $this->type = $type;
     }
 

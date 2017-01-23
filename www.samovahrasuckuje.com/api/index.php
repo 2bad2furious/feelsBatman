@@ -7,7 +7,7 @@ array_shift($url);
 
 $l = count($url) - 1;
 
-$lang = new Language();
+$lang = (substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2) == "cs")? new CzechLanguage() : new Language();
 
 $s = $url[$l];
 
@@ -17,14 +17,13 @@ if (strlen($url[$l]) == 0 && count($url) > 1) {
     unset($url[$l]);
     header("Location:/" . implode("/", $url));
 }
-$name = $url[0] . "Controllers";
+$name = $url[0] . "Controller";
 
 if ($name == "Controllers") $name = "ErrorController";
 
 array_shift($url);
 
-if (file_exists("api/Controllers/" . $name. ".php")) $controller = new $name($url,$lang);
+if (file_exists("Controllers/" . $name. ".php")) $controller = new $name($url,$lang);
 else $controller = new ErrorController($url,$lang);
-
 
 ?>

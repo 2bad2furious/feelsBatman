@@ -23,13 +23,34 @@ class Language{
     public $usernameLabel = "Enter your username";
     public $registerFormTitle = "Register now!";
     public $registerErrorPasswords = "Passwords don't match";
+    public $registerFailure = "Something has gone wrong while registering your account :(";
+    public $registerSuccess = "Successfully registered!! :}";
     public $formHasNoData = "Form has no data";
     public $profileDescriptionLabel = "Description of your profile";
     public $profileUploadLabel = "Upload or something";
     public $headerHome = "Home";
-    public $headerLogout = "Log the fuck out";
+    public $headerLogout = "Log the fucking fuck out";
     public $headerRegister = "Register";
     public $headerLogin = "Log In";
     public $userNotFound = "userNotFound";
     public $welcome = "welcome";
+
+    public static function getCurrentLanguage(){
+        if(isset($_COOKIE["language"]) && file_exists($_COOKIE["language"]) && class_exists($_COOKIE["language"])){
+            $val = $_COOKIE["language"];
+        }else{
+            $val = self::setLanguage(substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2));
+        }
+        return new $val;
+    }
+
+    public static function setLanguage($lang_code){
+        if($lang_code == "cs"){
+            $val = "CzechLanguage";
+        }else{
+            $val = "Language";
+        }
+        setcookie("language",$val,time() + (60 * 60 * 24 * 30), "/");
+        return $val;
+    }
 }
