@@ -74,10 +74,10 @@ public class GameImpl implements Game {
     }
     @Override
     public boolean isMovePossible(int x, int y) {
-        List<List<GameField>> field = gameBoard.fields();
-        /*boolean onBoard = isOnBoard(x,y);*/
-        /*boolean playerCheck = (field.get(x).get(y).player() == playerOnTurn || field.get(x).get(y).player() == Player.ANON);*/
-        return (isOnBoard(x, y) && (field.get(x).get(y).player() == playerOnTurn || field.get(x).get(y).player() == Player.ANON));
+        GameField gf = gameBoard.fields().get(x).get(y);
+        boolean onBoard = isOnBoard(x,y);
+        boolean playerCheck = (gf.player() == playerOnTurn || gf.player() == Player.ANON);
+        return (isOnBoard(x, y) && (gf.player() == playerOnTurn || gf.player() == Player.ANON));
     }
 
     private boolean isOnBoard(int x, int y) {

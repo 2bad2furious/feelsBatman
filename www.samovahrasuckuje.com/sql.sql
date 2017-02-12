@@ -27,9 +27,9 @@
   --GROUP BY t1.fab
 
 -- Pro které fabriky pracuje člověk který pracuje pro nejvíc fabrik (GROUP_CONCAT)
-  SELECT pracuje.zam, GROUP_CONCAT(DISTINCT fabrika.jmeno ORDER BY fabrika.jmeno SEPARATOR ', ') FROM pracuje JOIN(
+  SELECT pracuje.zam, GROUP_CONCAT(fabrika.jmeno ORDER BY fabrika.jmeno SEPARATOR ', ') FROM pracuje JOIN(
   SELECT MAX(t1.c),t1.pracuje.zam FROM(
-  SELECT pracuje.zam, COUNT(pracuje.zam) as c FROM pracuje
+  SELECT pracuje.zam, COUNT(DISTINCT pracuje.fab) as c FROM pracuje
   GROUP BY pracuje.zam) as t1) AS t2 ON pracuje.zam = t2.zam
   JOIN fabrika ON fabrika.id = pracuje.fab
 

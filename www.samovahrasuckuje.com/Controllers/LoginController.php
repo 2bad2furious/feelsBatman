@@ -4,7 +4,6 @@ class LoginController extends Controller
 {
     public function main()
     {
-
         if ($this->isLogged()) {
             $this->redirect("/");
         }
