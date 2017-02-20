@@ -65,4 +65,17 @@ RIGHT JOIN zvirata ON osetruje.zvire = zvirata.id
 JOIN ma_rad ON zvirata.druh = ma_rad.druh
 WHERE osetruje.id IS NULL
 
+------ p 4
+
+SELECT zvirata.id, osetruje.osetrovatel, COUNT(ma_rad.id), COUNT(osetruje.id) AS pocet
+FROM zvirata
+JOIN osetruje
+ON osetruje.zvire = zvirata.id
+LEFT JOIN ma_rad
+ON ma_rad.druh = zvirata.druh
+AND osetruje.osetrovatel = ma_rad.osetrovatel
+GROUP BY zvirata.id, osetruje.osetrovatel
+
+
+
 

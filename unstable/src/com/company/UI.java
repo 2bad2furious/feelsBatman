@@ -1,11 +1,11 @@
 package com.company;
 
+import com.company.domain.model.Coordinates;
 import com.company.domain.model.GameField;
 import com.company.domain.model.Player;
 
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.IntStream;
 
 /**
  * Created by user on 23.01.2017.
@@ -13,12 +13,8 @@ import java.util.stream.IntStream;
 public class UI {
     private static Scanner sc = new Scanner(System.in);
 
-    public static int[] getNextMove(){
-        int x = sc.nextInt();
-        int y = sc.nextInt();
-
-        int[] arr = {x, y};
-        return arr;
+    public static Coordinates getNextMove(){
+        return new Coordinates(sc.nextInt(),sc.nextInt());
     }
 
     public static void print(List<List<GameField>> arr,Player currentPlayer, int p1count, int p2count){
