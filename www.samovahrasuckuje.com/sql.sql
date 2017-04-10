@@ -42,3 +42,4 @@
   --GROUP BY pracuje.zam
   --) as t1 ) as t2 ON t2.zam = pracuje.zam
   --GROUP BY p.zam
+

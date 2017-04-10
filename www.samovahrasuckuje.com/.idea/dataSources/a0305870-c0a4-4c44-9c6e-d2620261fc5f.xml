@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="MySQL - zoo@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="2.6">
+    <schema id="1" name="zoo">
+      <visible>1</visible>
+    </schema>
+    <schema id="2" name="dbtest"/>
+    <schema id="3" name="dochazka"/>
+    <schema id="4" name="information_schema"/>
+    <schema id="5" name="macurapart"/>
+    <schema id="6" name="mysql"/>
+    <schema id="7" name="nemocnice"/>
+    <schema id="8" name="performance_schema"/>
+    <schema id="9" name="phpmyadmin"/>
+    <schema id="10" name="pizza"/>
+    <schema id="11" name="riotapi"/>
+    <schema id="12" name="samsgame"/>
+    <schema id="13" name="test"/>
+    <schema id="14" name="workers"/>
+    <table id="15" parent="1" name="druhy"/>
+    <table id="16" parent="1" name="jidelnicek"/>
+    <table id="17" parent="1" name="ma_rad"/>
+    <table id="18" parent="1" name="osetrovatele"/>
+    <table id="19" parent="1" name="osetruje"/>
+    <table id="20" parent="1" name="potrava"/>
+    <table id="21" parent="1" name="zere"/>
+    <table id="22" parent="1" name="zvirata">
+      <comment>Tabulka jednotlivych zvirat</comment>
+    </table>
+    <column id="23" parent="15" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="24" parent="15" name="nazev">
+      <data-type>varchar(256)|0</data-type>
+    </column>
+    <column id="25" parent="15" name="vaha_min">
+      <comment>Minimalni vaha v kilogramech</comment>
+      <data-type>decimal(10)|0</data-type>
+    </column>
+    <column id="26" parent="15" name="vaha_max">
+      <comment>Maximalni vaha v kilogramech</comment>
+      <data-type>decimal(10)|0</data-type>
+    </column>
+    <key id="27" parent="15" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="28" parent="16" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="29" parent="16" name="zvire">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="30" parent="16" name="potrava">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="31" parent="16" name="jednotek">
+      <mandatory>1</mandatory>
+      <data-type>decimal(6)|0</data-type>
+    </column>
+    <column id="32" parent="16" name="cas_krmeni">
+      <data-type>datetime|0</data-type>
+    </column>
+    <key id="33" parent="16" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="34" parent="17" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="35" parent="17" name="osetrovatel">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="36" parent="17" name="druh">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <key id="37" parent="17" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="38" parent="18" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="39" parent="18" name="jmeno">
+      <data-type>varchar(256)|0</data-type>
+    </column>
+    <column id="40" parent="18" name="narozen">
+      <comment>Datum narozeni</comment>
+      <data-type>date|0</data-type>
+    </column>
+    <key id="41" parent="18" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="42" parent="19" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="43" parent="19" name="osetrovatel">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="44" parent="19" name="zvire">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <key id="45" parent="19" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="46" parent="20" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="47" parent="20" name="nazev">
+      <data-type>varchar(256)|0</data-type>
+    </column>
+    <column id="48" parent="20" name="kalorie">
+      <comment>Kalorie na jednotku potravy</comment>
+      <data-type>int(6)|0</data-type>
+    </column>
+    <column id="49" parent="20" name="bilkoviny">
+      <comment>Bilkoviny na jednotku potravy</comment>
+      <data-type>decimal(6)|0</data-type>
+    </column>
+    <column id="50" parent="20" name="sacharidy">
+      <comment>Sacharidy na jednotku potravy</comment>
+      <data-type>decimal(6)|0</data-type>
+    </column>
+    <column id="51" parent="20" name="tuky">
+      <comment>Tuky na jednotku potravy</comment>
+      <data-type>decimal(6)|0</data-type>
+    </column>
+    <column id="52" parent="20" name="vaha">
+      <comment>Vaha jednotky potravy v kilogramech</comment>
+      <data-type>decimal(6)|0</data-type>
+    </column>
+    <key id="53" parent="20" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="54" parent="21" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="55" parent="21" name="druh">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="56" parent="21" name="potrava">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <key id="57" parent="21" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="58" parent="22" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="59" parent="22" name="druh">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="60" parent="22" name="jmeno">
+      <data-type>varchar(256)|0</data-type>
+    </column>
+    <column id="61" parent="22" name="vaha">
+      <comment>Vaha v kilogramech</comment>
+      <data-type>decimal(10)|0</data-type>
+    </column>
+    <column id="62" parent="22" name="narozen">
+      <data-type>date|0</data-type>
+    </column>
+    <column id="63" parent="22" name="spotreba">
+      <comment>Denni spotreba energie v kaloriich</comment>
+      <data-type>int(6)|0</data-type>
+    </column>
+    <key id="64" parent="22" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+  </database-model>
+</dataSource>

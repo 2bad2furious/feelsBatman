@@ -30,7 +30,7 @@ public class Elf {
         return count;
     }
 
-    public boolean isBlocked(){
+    public final boolean isBlocked(){
         return blocked;
     }
 

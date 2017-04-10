@@ -67,15 +67,49 @@ WHERE osetruje.id IS NULL
 
 ------ p 4
 
-SELECT zvirata.id, osetruje.osetrovatel, COUNT(ma_rad.id), COUNT(osetruje.id) AS pocet
+SELECT SUM(t1.pocet) FROM
+  (SELECT zvirata.id, COUNT(ma_rad.id) + COUNT(osetruje.id) AS pocet
 FROM zvirata
 JOIN osetruje
 ON osetruje.zvire = zvirata.id
 LEFT JOIN ma_rad
 ON ma_rad.druh = zvirata.druh
 AND osetruje.osetrovatel = ma_rad.osetrovatel
-GROUP BY zvirata.id, osetruje.osetrovatel
+GROUP BY zvirata.id) as t1
 
+------------------
 
+SELECT osetrovatele.id, COUNT(osetruje.id) AS count
+FROM osetruje
+JOIN Zvirata ON Zvirata.id = osetruje.zvire
+LEFT JOIN ma_rad ON ma_rad.druh = Zvirata.druh AND ma_rad.osetrovatel = osetruje.osetrovatel
+JOIN osetrovatele ON osetruje.osetrovatel = osetrovatele.id AND ma_rad.id IS NULL
+GROUP BY osetrovatele.id
+ORDER BY count DESC
+LIMIT 1 -- xd
+
+--- actutally correct
+
+SELECT osetruje.osetrovatel, COUNT(osetruje.id) AS count
+FROM osetruje
+JOIN Zvirata ON Zvirata.id = osetruje.zvire
+-- JOIN ma_rad ON ma_rad.druh = Zvirata.druh AND ma_rad.osetrovatel = osetruje.osetrovatel
+LEFT JOIN(
+SELECT DISTINCT osetruje.osetrovatel as id
+FROM osetruje
+JOIN Zvirata ON Zvirata.id = osetruje.zvire
+JOIN ma_rad ON ma_rad.druh = Zvirata.druh AND ma_rad.osetrovatel = osetruje.osetrovatel
+-- osetrovateleCoMajRadiNekohoKohoOsetrujou
+) AS t1 ON t1.id = osetruje.osetrovatel
+WHERE t1.id IS NULL
+GROUP BY osetruje.osetrovatel
+ORDER BY count DESC;
+-- xd
+
+-- k4 v2
+SELECT Zvirata.*
+FROM zvirata
+JOIN druhy ON druhy.id = zvirata.druh
+ORDER BY Zvirata.druh,Zvirata.narozen
 
 
